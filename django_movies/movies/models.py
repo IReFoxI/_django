@@ -42,3 +42,39 @@ class Genre(models.Model):
     class Meta:
         verbose_name = "Жанр"
         verbose_name_plural = "Жанры"
+
+
+class Movie(models.Model):
+    title = models.CharField("Название", max_length=100)
+    tagline = models.CharField("Слоган", max_length=100, default='')
+    description = models.TextField("Описание")
+    poster = models.ImageField('Постер', upload_to='movies/')
+    year = models.PositiveSmallIntegerField("Дата выхода", default=2020)
+    country = models.CharField("Страна", max_length=30)
+    directors = models.ManyToManyField(Actor, verbore_name="режиссер",
+            related_name='film_director')
+    actors = models.ManyToManyField(Actor, verbore_name="актеры",
+            related_name='film_actor')
+    genres = models.ManyToManyField(Genre, verbore_name="жанры")
+    world_premiere = models.DataField('Премьера в мире', default=date.today)
+    budget = models.PositiveIntegerField(
+            "Бюджет", default=0, help_text="указывать сумму в долларах"
+            )
+    fees_in_usa = models.PositiveIntegerFields(
+            "Сборы в США", defaulf=0, help_text='указывать сумму в долларах'
+            )
+    fees_in_world = models.PositiveIntegerFields(
+            "Сборы в Мире", defaulf=0, help_text='указывать сумму в долларах'
+            )
+    category = models.ForeignKey(
+            Category,verbose_name="Категория", on_delete=models.SET_NULL, null=True
+            )
+    url = models.SlugField(max_length=160, unique=True)
+    draft = models.BooleanField("Черновик", defaulf=False)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Фильм"
+        verbose_name_plural = "Фильмы"
