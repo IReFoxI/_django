@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ЛУЧШИЙ ВЕБСАЙТ 2к20</title>
+</head>
+
+<body>
+  <h1>Список фильмов</h1>
+  {% for movie in movie_list %}
+    <h2>{{ movie.title}}</h2>
+    <img src=media/{{movie.poster}} height="280" width="180">
+    <h3>Описание:</h3>
+    {{movie.description}}
+  {% endfor %}
+</body>
+</html>
